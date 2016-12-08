@@ -23,6 +23,7 @@ public class GameRunner {
 	public GameRunner() {
 		// Initialize the minimum systems required
 		game_systems.initMin();
+		game_systems.initGame();
 
 		game_systems.graphics_engine.showFrame( GraphicsEngine.LOADING_SCREEN );
 		game_systems.graphics_engine.start();

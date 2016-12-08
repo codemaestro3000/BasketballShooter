@@ -98,7 +98,7 @@ public class GameSystems {
 		
 		// Then create the login page
 		if( !has_init_graphics ){
-			graphics_engine = new GraphicsEngine( this, false );
+			graphics_engine = new GraphicsEngine( this, true );
 			has_init_graphics = true;
 		}
 		
