@@ -2,8 +2,8 @@
 
 out vec4 out_color;
 
-smooth in vec2 pass_tex_coord;
-smooth in vec3 pass_frag_pos;
+in vec2 pass_tex_coord;
+in vec3 pass_frag_pos;
 smooth in vec3 pass_normal;
 
 uniform sampler2D texture_diffuse;

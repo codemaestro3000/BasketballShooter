@@ -32,6 +32,8 @@ import com.viduus.util.models.util.Color;
 public class WorldEngine extends com.viduus.charon.global.world.WorldEngine {
 
 	private Model goofy;
+	private Model basketball;
+	private Model basketball_hoop;
 	
 	/**
 	 * TODO
@@ -45,6 +47,8 @@ public class WorldEngine extends com.viduus.charon.global.world.WorldEngine {
 		{
 		    DaeLoader loader = new DaeLoader();
 		    goofy = new Model(loader.loadModel("./models/Goofy.dae"));
+		    basketball = new Model(loader.loadModel("./models/Basketball.dae"));
+		    basketball_hoop = new Model(loader.loadModel("./models/BasketballHoop.dae"));
 		}
 		catch(ParserConfigurationException | SAXException | IOException e)
 		{
@@ -64,7 +68,7 @@ public class WorldEngine extends com.viduus.charon.global.world.WorldEngine {
 		graphics.setDisplay3D();
 		
 		Mat4 transformer = new Mat4();
-		transformer.translate(0, -0.05f, -0.1f);
+		transformer.translate(0, -0.05f, -0.3f);
 //		transformer.rotate(0, 3.14159f / 2.0f, 0);
 		
 		graphics.view_matrix.multiply(transformer);
@@ -77,6 +81,12 @@ public class WorldEngine extends com.viduus.charon.global.world.WorldEngine {
 			ErrorHandler.catchError(e);
 		}
 		
+//		basketball.render(graphics);
+//		
+//		graphics.model_matrix.scale(1.0f, 1.0f, 1.0f);
+//		basketball_hoop.render(graphics);
+//		
+		graphics.model_matrix.scale(2.0f, 2.0f, 2.0f);
 		goofy.render(graphics);
 	}
 }

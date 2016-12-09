@@ -28,11 +28,9 @@ public class Model implements OpenGLRenderable{
 
 	@Override
 	public void render(OpenGLGraphics graphics) {
-//		graphics.model_matrix.rotate(1, 0, 0, (float) Math.PI/2);
 		graphics.pushMatricies();
 		
 		for( RenderableMesh m : this.meshes){
-//			if(m.getName().compareTo("Goof_Head_Ambi") == 0)
 			m.render( graphics );
 		}
 		
