@@ -3,11 +3,8 @@
  */
 package com;
 
-import com.enemy.EnemyEngine;
 import com.game.GameEngine;
 import com.graphics.GraphicsEngine;
-import com.item.ItemEngine;
-import com.quest.QuestEngine;
 import com.viduus.charon.global.audio.AudioEngine;
 import com.viduus.charon.global.input.InputEngine;
 import com.viduus.charon.global.output.OutputHandler;
@@ -37,9 +34,6 @@ public class GameSystems {
 	public AudioEngine audio_engine;
 	public GameEngine game_engine;
 	public GraphicsEngine graphics_engine;
-	public EnemyEngine enemy_engine;
-	public ItemEngine item_engine;
-	public QuestEngine quest_engine;
 	public SystemsEngine systems_engine;
 	public WorldEngine world_engine;
 	public InputEngine input_engine;
@@ -124,24 +118,6 @@ public class GameSystems {
 	public void initGame(){
 		// Just in case something was missed earlier
 		initMin();
-		
-		// Initialize the enemy engine
-		if( !has_init_enemy ){
-			enemy_engine = new EnemyEngine( this );
-			has_init_enemy = true;
-		}
-		
-		// Initialize the item engine
-		if( !has_init_item ){
-			item_engine = new ItemEngine( this );
-			has_init_item = true;
-		}
-		
-		// Initialize the quest engine
-		if( !has_init_quest ){
-			quest_engine = new QuestEngine( this );
-			has_init_quest = true;
-		}
 		
 		// Initialize the world engine
 		if( !has_init_world ){

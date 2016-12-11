@@ -3,6 +3,7 @@ package com.graphics;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
+import java.util.ArrayList;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -16,6 +17,9 @@ import com.viduus.charon.global.graphics.opengl.OpenGLRenderable;
 import com.viduus.charon.global.graphics.opengl.shaders.ShaderProgram;
 import com.viduus.charon.global.graphics.opengl.shaders.exceptions.ShaderException;
 import com.viduus.charon.global.graphics.opengl.shaders.variables.ShaderVariable;
+import com.viduus.charon.global.util.math.Vec3;
+import com.viduus.charon.global.world.TriangularObject;
+import com.viduus.util.debug.OutputHandler;
 import com.viduus.util.models.geometries.Mesh;
 import com.viduus.util.models.geometries.Polylist;
 
@@ -26,9 +30,31 @@ public class RenderableMesh implements OpenGLRenderable{
 	private IntBuffer vao;
 	
 	private final Mesh mesh;
+	
+	public ArrayList<TriangularObject> faces;
 
 	public RenderableMesh(Mesh mesh) {
 		this.mesh = mesh;
+		faces = new ArrayList<TriangularObject>();
+		
+		for(Polylist pList : this.mesh.polylists) {
+			float[] gpu_buffer = pList.getGPUBuffer(0, null);
+
+			int num_vertices = gpu_buffer.length / pList.elements_per_vertex;
+			for(int i = 0; i < num_vertices; i += 3) {
+				Vec3 v1, v2, v3, n1, n2, n3;
+				
+				v1 = new Vec3(gpu_buffer[(i + 0) * pList.elements_per_vertex + 0], gpu_buffer[(i + 0) * pList.elements_per_vertex + 1], gpu_buffer[(i + 0) * pList.elements_per_vertex + 2]);
+				v2 = new Vec3(gpu_buffer[(i + 1) * pList.elements_per_vertex + 0], gpu_buffer[(i + 1) * pList.elements_per_vertex + 1], gpu_buffer[(i + 1) * pList.elements_per_vertex + 2]);
+				v3 = new Vec3(gpu_buffer[(i + 2) * pList.elements_per_vertex + 0], gpu_buffer[(i + 2) * pList.elements_per_vertex + 1], gpu_buffer[(i + 2) * pList.elements_per_vertex + 2]);
+				n1 = new Vec3(gpu_buffer[(i + 0) * pList.elements_per_vertex + 3], gpu_buffer[(i + 0) * pList.elements_per_vertex + 4], gpu_buffer[(i + 0) * pList.elements_per_vertex + 5]);
+				n2 = new Vec3(gpu_buffer[(i + 1) * pList.elements_per_vertex + 3], gpu_buffer[(i + 1) * pList.elements_per_vertex + 4], gpu_buffer[(i + 1) * pList.elements_per_vertex + 5]);
+				n3 = new Vec3(gpu_buffer[(i + 2) * pList.elements_per_vertex + 3], gpu_buffer[(i + 2) * pList.elements_per_vertex + 4], gpu_buffer[(i + 2) * pList.elements_per_vertex + 5]);
+			
+				Vec3 normal = new Vec3((n1.x + n2.x + n3.x) / 3.0f, (n1.y + n2.y + n3.y) / 3.0f, (n1.z + n2.z + n3.z) / 3.0f);
+				faces.add(new TriangularObject(v1, v2, v3, normal));
+			}
+		}
 	}
 	
 	public String getName() {

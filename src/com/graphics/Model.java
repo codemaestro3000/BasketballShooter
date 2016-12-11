@@ -9,7 +9,7 @@ import com.viduus.util.models.ModelData;
 public class Model implements OpenGLRenderable{
 
 	private final ModelData model_data;
-	private ArrayList<RenderableMesh> meshes;
+	public ArrayList<RenderableMesh> meshes;
 	
 	/**
 	 * Creates a new Model.

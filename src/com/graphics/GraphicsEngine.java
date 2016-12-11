@@ -10,6 +10,7 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 
 import com.GameSystems;
 import com.viduus.charon.global.error.ErrorHandler;
+import com.viduus.charon.global.graphics.Dimension;
 import com.viduus.charon.global.graphics.opengl.OpenGLPanel;
 import com.viduus.charon.global.graphics.opengl.models.loader.DaeLoader;
 import com.viduus.charon.global.input.controller.device.KeyboardMouseController;
@@ -153,4 +154,7 @@ public class GraphicsEngine {
 		controller.setControllerOwnership(graphics_frame);
 	}
 
+	public Dimension getCurrentFrameSize() {
+		return this.current_frame.getDimension();
+	}
 }

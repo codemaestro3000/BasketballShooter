@@ -5,5 +5,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/ProjectCharonGlobal"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LWJGL"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/JDaeLoader"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OrientDB"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

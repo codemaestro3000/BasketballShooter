@@ -4,7 +4,7 @@
 package com.graphics;
 
 import com.GameSystems;
-import com.graphics.frames.IntroFrame;
+import com.graphics.frames.WorldFrame;
 import com.viduus.charon.global.graphics.opengl.OpenGLPanel;
 
 /**
@@ -14,7 +14,7 @@ import com.viduus.charon.global.graphics.opengl.OpenGLPanel;
  */
 public class FrameManager {
 	
-	private IntroFrame initial_frame = null;
+	private WorldFrame initial_frame = null;
 
 	private GameSystems game_systems;
 
@@ -34,7 +34,7 @@ public class FrameManager {
 	public OpenGLPanel retrieveInitialGameLoadingFrame(GraphicsFrame graphics_frame) {
 		// Create it if it hasn't been initialized yet
 		if( initial_frame == null )
-			initial_frame  = new IntroFrame( game_systems, graphics_frame );
+			initial_frame  = new WorldFrame( game_systems, graphics_frame );
 		return initial_frame;
 	}
 
