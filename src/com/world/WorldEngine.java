@@ -17,6 +17,7 @@ import com.models.Basketball;
 import com.models.BasketballHoop;
 import com.models.Goofy;
 import com.player.MainPlayer;
+import com.viduus.charon.global.audio.Sound;
 import com.viduus.charon.global.error.ErrorHandler;
 import com.viduus.charon.global.graphics.opengl.OpenGLGraphics;
 import com.viduus.charon.global.graphics.opengl.shaders.ShaderProgram;
@@ -56,7 +57,12 @@ public class WorldEngine extends com.viduus.charon.global.world.WorldEngine {
 	private long basketball_shot_start_time = 0;
 	private boolean basketball_shot = false;
 	public float basketball_shot_percent;
+	public int times_scored = 0;
+	private long last_score_time = 0;
 	
+	Sound theme, win_sound, lose_sound;
+	
+	private final GameSystems game_systems;
 	
 	/**
 	 * TODO
@@ -65,19 +71,29 @@ public class WorldEngine extends com.viduus.charon.global.world.WorldEngine {
 	 * @throws IOException 
 	 * @throws SAXException 
 	 */
-	public WorldEngine(GameSystems gameSystems) {
+	public WorldEngine(GameSystems game_systems) {
+		this.game_systems = game_systems;
+		
 		try
 		{
 		    DaeLoader DAELoader = new DaeLoader();
 		    goofy = new Goofy(DAELoader.loadModel("./models/Goofy.dae"));
 		    basketball = new Basketball(DAELoader.loadModel("./models/Basketball.dae"));
 		    basketball_hoop = new BasketballHoop(DAELoader.loadModel("./models/BasketballHoop.dae"));
-		    player = new MainPlayer(gameSystems);
+		    player = new MainPlayer(game_systems);
 		    
 		    bcourt_1 = new Vec3(130f, -.7f, -69f);
 		    bcourt_2 = new Vec3(-130f, -.7f, -69f);
 		    bcourt_3 = new Vec3(-130f, -.7f, 69f);
 		    bcourt_4 = new Vec3(130f, -.7f, 69f);
+		    
+		    theme = game_systems.audio_engine.createSound("./sounds/theme.ogg");
+		    theme.setToLoop(true);
+		    theme.setVolume(0.2f);
+		    game_systems.audio_engine.playSound(theme);
+		    
+		    win_sound = game_systems.audio_engine.createSound("./sounds/bingo.ogg");
+		    lose_sound = game_systems.audio_engine.createSound("./sounds/fooled_you.ogg");
 		}
 		catch(ParserConfigurationException | SAXException | IOException e)
 		{
@@ -145,8 +161,8 @@ public class WorldEngine extends com.viduus.charon.global.world.WorldEngine {
 			basketball_hoop.render(graphics);
 			
 			//Render Goofy
-			goofy.setLocation(player.angle_around_hoop);
-			goofy.render(graphics);
+//			goofy.setLocation(player.angle_around_hoop);
+//			goofy.render(graphics);
 			
 			//Render the Basketball
 			long temp = System.currentTimeMillis();
@@ -167,7 +183,7 @@ public class WorldEngine extends com.viduus.charon.global.world.WorldEngine {
 				}
 				else if(dif > 100) {
 					basketball_shot = false;
-					float speed = basketball_shot_percent * 150f;
+					float speed = basketball_shot_percent * 8f;
 					basketball.shoot(player.angle_around_hoop, player.zenith, player.azimuth, speed);
 				}
 			}
@@ -175,7 +191,20 @@ public class WorldEngine extends com.viduus.charon.global.world.WorldEngine {
 			basketball.updateLocation(player.angle_around_hoop);
 			basketball.checkForCollision(basketball_hoop);
 			basketball.checkForCollision(bcourt_1.y);
+			int score = basketball.isInside(basketball_hoop.rim);
+			if(score == 1) {
+				if(temp - last_score_time > 500) {
+					times_scored++;
+					game_systems.audio_engine.playSound(win_sound);
+					last_score_time = temp;
+				}
+			}
+			else if(score == -1) {
+				game_systems.audio_engine.playSound(lose_sound);
+			}
 			basketball.render(graphics);
+			
+			
 		} catch (IOException | ShaderException e) {
 			ErrorHandler.catchError(e);
 		}

@@ -24,6 +24,8 @@ public class MainPlayer {
 	
 	public float zenith = 0, azimuth = 0;
 	
+	private boolean controls_enabled = true;
+	
 	public MainPlayer(GameSystems game_systems) {
 		this.game_systems = game_systems;
 		initialize();
@@ -41,24 +43,50 @@ public class MainPlayer {
 		return player_controls_state;
 	}
 	
+	public void disableControls() {
+		controls_enabled = false;
+	}
+	
+	public void enableControls() {
+		controls_enabled = true;
+	}
+	
+	public boolean controlsEnabled() {
+		return controls_enabled;
+	}
+	
 	public void updateState() {
 		PlayerControlsState controls_state = getControlsState();
 		
-		Dimension curr_frame_size = game_systems.graphics_engine.getCurrentFrameSize();
-		
-		angle_around_hoop += controls_state.left + controls_state.right;
-		if(angle_around_hoop > -90)
-			angle_around_hoop = -90;
-		else if(angle_around_hoop < -270)
-			angle_around_hoop = -270;
+		if(!controls_enabled) {
+			controls_enabled = controls_state.select;
+		}
+		else {
+			Dimension curr_frame_size = game_systems.graphics_engine.getCurrentFrameSize();
+			
+			angle_around_hoop += controls_state.left + controls_state.right;
+			if(angle_around_hoop > -90)
+				angle_around_hoop = -90;
+			else if(angle_around_hoop < -270)
+				angle_around_hoop = -270;
+			
+			if(!controls_state.joystick_active) {
+				azimuth = 45.0f * ((controls_state.mouse_location.x - curr_frame_size.width / 2.0f) / (curr_frame_size.width / 2.0f));
+				zenith = 45.0f * ((controls_state.mouse_location.y - curr_frame_size.height / 2.0f) / (curr_frame_size.height / 2.0f));
+			}
+			else {
+				if(controls_state.left_joystick != null) {
+//					OutputHandler.println(controls_state.left_joystick[0] + " " + controls_state.left_joystick[1]);
+					azimuth = 45.0f * controls_state.left_joystick[0];
+					zenith = 45.0f * -controls_state.left_joystick[1];
+				}
+			}
+		}
 		
 		float eye_x = (float) (113 + 60 * Math.cos(Math.toRadians(angle_around_hoop)));
 		float eye_z = (float) (0f + 60 * Math.sin(Math.toRadians(angle_around_hoop)));
 		
 		eye = new Vec3(eye_x, 11.f, eye_z);
-		
-		azimuth = 45.0f * ((controls_state.mouse_location.x - curr_frame_size.width / 2.0f) / (curr_frame_size.width / 2.0f));
-		zenith = 45.0f * ((controls_state.mouse_location.y - curr_frame_size.height / 2.0f) / (curr_frame_size.height / 2.0f));
 		
 		x = (float) (Math.sin(Math.toRadians(zenith + 90)) * Math.cos(Math.toRadians(azimuth + (180 + angle_around_hoop))));
 		y = (float) (Math.cos(Math.toRadians(zenith + 90)));

@@ -13,6 +13,9 @@ public class PlayerControlsState {
 	public float zoom = 0;
 	public boolean select;
 	public boolean interact;
+	public boolean joystick_active;
+	public float[] left_joystick;
+	public float[] right_joystick;
 	
 	@Override
 	public PlayerControlsState clone() {
@@ -28,6 +31,9 @@ public class PlayerControlsState {
 		s.zoom = this.zoom;
 		s.select = this.select;
 		s.interact = this.interact;
+		s.joystick_active = this.joystick_active;
+		s.left_joystick = this.left_joystick;
+		s.right_joystick = this.right_joystick;
 		
 		return s;
 	}

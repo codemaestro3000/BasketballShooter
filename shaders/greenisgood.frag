@@ -12,4 +12,5 @@ void main()
 {    
 	out_color.rgb = pass_normal;
 	out_color.a = 1;
+	out_color.r = -out_color.r;
 }

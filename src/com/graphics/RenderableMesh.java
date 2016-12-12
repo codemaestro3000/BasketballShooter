@@ -29,32 +29,10 @@ public class RenderableMesh implements OpenGLRenderable{
 	private IntBuffer vbo;
 	private IntBuffer vao;
 	
-	private final Mesh mesh;
-	
-	public ArrayList<TriangularObject> faces;
+	public final Mesh mesh;
 
 	public RenderableMesh(Mesh mesh) {
 		this.mesh = mesh;
-		faces = new ArrayList<TriangularObject>();
-		
-		for(Polylist pList : this.mesh.polylists) {
-			float[] gpu_buffer = pList.getGPUBuffer(0, null);
-
-			int num_vertices = gpu_buffer.length / pList.elements_per_vertex;
-			for(int i = 0; i < num_vertices; i += 3) {
-				Vec3 v1, v2, v3, n1, n2, n3;
-				
-				v1 = new Vec3(gpu_buffer[(i + 0) * pList.elements_per_vertex + 0], gpu_buffer[(i + 0) * pList.elements_per_vertex + 1], gpu_buffer[(i + 0) * pList.elements_per_vertex + 2]);
-				v2 = new Vec3(gpu_buffer[(i + 1) * pList.elements_per_vertex + 0], gpu_buffer[(i + 1) * pList.elements_per_vertex + 1], gpu_buffer[(i + 1) * pList.elements_per_vertex + 2]);
-				v3 = new Vec3(gpu_buffer[(i + 2) * pList.elements_per_vertex + 0], gpu_buffer[(i + 2) * pList.elements_per_vertex + 1], gpu_buffer[(i + 2) * pList.elements_per_vertex + 2]);
-				n1 = new Vec3(gpu_buffer[(i + 0) * pList.elements_per_vertex + 3], gpu_buffer[(i + 0) * pList.elements_per_vertex + 4], gpu_buffer[(i + 0) * pList.elements_per_vertex + 5]);
-				n2 = new Vec3(gpu_buffer[(i + 1) * pList.elements_per_vertex + 3], gpu_buffer[(i + 1) * pList.elements_per_vertex + 4], gpu_buffer[(i + 1) * pList.elements_per_vertex + 5]);
-				n3 = new Vec3(gpu_buffer[(i + 2) * pList.elements_per_vertex + 3], gpu_buffer[(i + 2) * pList.elements_per_vertex + 4], gpu_buffer[(i + 2) * pList.elements_per_vertex + 5]);
-			
-				Vec3 normal = new Vec3((n1.x + n2.x + n3.x) / 3.0f, (n1.y + n2.y + n3.y) / 3.0f, (n1.z + n2.z + n3.z) / 3.0f);
-				faces.add(new TriangularObject(v1, v2, v3, normal));
-			}
-		}
 	}
 	
 	public String getName() {

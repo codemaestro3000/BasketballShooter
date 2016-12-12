@@ -42,6 +42,8 @@ public class PlayerControls implements ControllerInputListener {
 		curr_state.zoom = 0;
 		curr_state.select = false;
 		curr_state.interact = false;
+		curr_state.left_joystick = null;
+		curr_state.right_joystick = null;
 
 		if( e.getKeyState(ControllerState.FORWARD_GAME_KEY) == ControllerState.ON_STATE || 
 			e.getKeyState(ControllerState.MOVE_UP) == ControllerState.ON_STATE ){
@@ -92,10 +94,22 @@ public class PlayerControls implements ControllerInputListener {
 			curr_state.interact = true;	
 			state_changed = true;
 		}
+		float[] left_joystick = e.getJoystickValues(ControllerState.LEFT_JOYSTICK);
+		if(left_joystick != null && (left_joystick[0] != 0.0f || left_joystick[1] != 0.0f)) {
+			curr_state.left_joystick = left_joystick;
+			state_changed = true;
+		}
+		float[] right_joystick = e.getJoystickValues(ControllerState.RIGHT_JOYSTICK);
+		if(right_joystick != null && (right_joystick[0] != 0.0f || right_joystick[1] != 0.0f)) {
+			curr_state.right_joystick = right_joystick;
+			state_changed = true;
+		}
 		
 		if(state_changed && e.getCaller() instanceof JoystickController) {
 			joystick_active = true;
 		}
+		
+		curr_state.joystick_active = joystick_active;
 	}
 	
 	public synchronized PlayerControlsState getState() {
