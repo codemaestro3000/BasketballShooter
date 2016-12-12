@@ -15,6 +15,7 @@ import com.viduus.util.models.geometries.Polylist;
 public class BasketballHoop extends Model {
 	
 	public SphericalObject rim;
+	public Vec3 location = new Vec3(120f, 20, -7.0f);
 
 	public BasketballHoop(ModelData model_data) {
 		super(model_data);

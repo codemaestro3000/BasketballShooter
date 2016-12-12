@@ -44,6 +44,12 @@ public class PlayerControls implements ControllerInputListener {
 		curr_state.interact = false;
 		curr_state.left_joystick = null;
 		curr_state.right_joystick = null;
+		curr_state.replay_enabled = false;
+		curr_state.replay_disabled = false;
+		curr_state.full_speed_selected = false;
+		curr_state.half_speed_selected = false;
+		curr_state.tenth_speed_selected = false;
+		curr_state.replay_focus_toggle = false;
 
 		if( e.getKeyState(ControllerState.FORWARD_GAME_KEY) == ControllerState.ON_STATE || 
 			e.getKeyState(ControllerState.MOVE_UP) == ControllerState.ON_STATE ){
@@ -92,6 +98,30 @@ public class PlayerControls implements ControllerInputListener {
 		}
 		if(e.getKeyState(ControllerState.INTERACT_KEY) == ControllerState.ON_STATE) {
 			curr_state.interact = true;	
+			state_changed = true;
+		}
+		if(e.getKeyState(ControllerState.ACTION8) == ControllerState.ON_STATE) {
+			curr_state.replay_focus_toggle = true;
+			state_changed = true;
+		}
+		if(e.getKeyState(ControllerState.ACTION5) == ControllerState.ON_STATE) {
+			curr_state.replay_enabled = true;
+			state_changed = true;
+		}
+		if(e.getKeyState(ControllerState.ACTION7) == ControllerState.ON_STATE) {
+			curr_state.replay_disabled = true;
+			state_changed = true;
+		}
+		if(e.getKeyState(ControllerState.MENU1) == ControllerState.ON_STATE) {
+			curr_state.full_speed_selected = true;
+			state_changed = true;
+		}
+		if(e.getKeyState(ControllerState.MENU2) == ControllerState.ON_STATE) {
+			curr_state.half_speed_selected = true;
+			state_changed = true;
+		}
+		if(e.getKeyState(ControllerState.MENU3) == ControllerState.ON_STATE) {
+			curr_state.tenth_speed_selected = true;
 			state_changed = true;
 		}
 		float[] left_joystick = e.getJoystickValues(ControllerState.LEFT_JOYSTICK);

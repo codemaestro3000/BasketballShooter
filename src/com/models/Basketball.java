@@ -128,6 +128,10 @@ public class Basketball extends Model{
 											  (float) (speed * Math.sin(Math.toRadians((angle_around_hoop + 180) + azimuth))));
 	}
 	
+	public void setLocation(Vec3 location) {
+		this.location = new Vec3(location.x, location.y, location.z);
+	}
+	
 	@Override
 	public void render(OpenGLGraphics graphics) {
 		

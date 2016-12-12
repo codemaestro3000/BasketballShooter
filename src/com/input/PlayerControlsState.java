@@ -16,6 +16,12 @@ public class PlayerControlsState {
 	public boolean joystick_active;
 	public float[] left_joystick;
 	public float[] right_joystick;
+	public boolean replay_enabled;
+	public boolean replay_disabled;
+	public boolean full_speed_selected;
+	public boolean half_speed_selected;
+	public boolean tenth_speed_selected;
+	public boolean replay_focus_toggle;
 	
 	@Override
 	public PlayerControlsState clone() {
@@ -34,6 +40,12 @@ public class PlayerControlsState {
 		s.joystick_active = this.joystick_active;
 		s.left_joystick = this.left_joystick;
 		s.right_joystick = this.right_joystick;
+		s.replay_enabled = this.replay_enabled;
+		s.replay_disabled = this.replay_disabled;
+		s.full_speed_selected = this.full_speed_selected;
+		s.half_speed_selected = this.half_speed_selected;
+		s.tenth_speed_selected = this.tenth_speed_selected;
+		s.replay_focus_toggle = this.replay_focus_toggle;
 		
 		return s;
 	}

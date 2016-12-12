@@ -19,7 +19,7 @@ public class SpeedBar {
 	}
 	
 	public void render(OpenGLGraphics graphics, float percent_filled, float window_height, float window_width) {
-		drawOutline(graphics, window_height, window_width);
+//		drawOutline(graphics, window_height, window_width);
 		fillInner(graphics, percent_filled, window_height, window_width);
 	}
 	
