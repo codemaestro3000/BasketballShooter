@@ -22,5 +22,6 @@ void main() {
     
     mat3 normal_matrix = transpose(inverse(mat3(modelMatrix)));
     pass_normal = normalize(normal_matrix * in_normal);
-//	pass_normal = normal_matrix * in_normal;
+	//pass_normal = normal_matrix * in_normal;
+	//pass_normal = modelMatrix * in_normal;
 }

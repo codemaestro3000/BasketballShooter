@@ -35,7 +35,7 @@ public class BasketballHoop extends Model {
 		for(RenderableMesh rm : this.meshes) {
 			if(rm.getName().equals("11:1")) {
 				for(Polylist pList : rm.mesh.polylists) {
-					float[] gpu_buffer = pList.getGPUBuffer(0, null);
+					float[] gpu_buffer = pList.getGPUBuffer();
 		
 					int num_vertices = gpu_buffer.length / pList.elements_per_vertex;
 					for(int i = 0; i < num_vertices; i += 3) {

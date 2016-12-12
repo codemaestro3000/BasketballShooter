@@ -1,10 +1,14 @@
 package com.graphics;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import com.viduus.charon.global.error.ErrorHandler;
 import com.viduus.charon.global.graphics.opengl.OpenGLGraphics;
 import com.viduus.charon.global.graphics.opengl.OpenGLRenderable;
+import com.viduus.charon.global.graphics.opengl.shaders.ShaderProgram;
+import com.viduus.charon.global.graphics.opengl.shaders.exceptions.ShaderException;
 import com.viduus.charon.global.output.OutputHandler;
 import com.viduus.charon.global.util.math.Vec3;
 import com.viduus.charon.global.world.TriangularObject;
@@ -91,7 +95,7 @@ public class Model implements OpenGLRenderable{
 			}
 			
 			for(Polylist pList : rm.mesh.polylists) {
-				float[] gpu_buffer = pList.getGPUBuffer(0, null);
+				float[] gpu_buffer = pList.getGPUBuffer();
 	
 				int num_vertices = gpu_buffer.length / pList.elements_per_vertex;
 				for(int i = 0; i < num_vertices; i += 3) {
@@ -115,8 +119,22 @@ public class Model implements OpenGLRenderable{
 	public void render(OpenGLGraphics graphics) {
 		graphics.pushMatricies();
 		
-		for( RenderableMesh m : this.meshes){
-			m.render( graphics );
+		try {
+			ShaderProgram prog = graphics.shader_manager.getActiveShader();
+			
+			for( RenderableMesh m : this.meshes){
+//				if( m.mesh.name.equals("Top_Ambi") ){
+//					prog.getUniformVariable("using_texture").setValue(1);
+//					graphics.texture_manager.bind(
+//						graphics.texture_manager.loadImage(graphics, "./img/Basketball/Image09760D80_09760D30.png"),
+//						prog.getUniformVariable("texture_diffuse")
+//					);
+//				}
+				m.render( graphics );
+			}
+			
+		} catch (ShaderException e) {
+			ErrorHandler.catchError(e);
 		}
 		
 		graphics.model_matrix.reset();
