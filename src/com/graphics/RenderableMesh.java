@@ -159,7 +159,6 @@ public class RenderableMesh implements OpenGLRenderable{
 						
 						active_shader.getUniformVariable("shininess").setValue(phong_model.shininess);
 						
-						OutputHandler.println(pList.material_symbol);
 						if( pList.material_symbol.equals("_2___Default-material") ){
 							active_shader.getUniformVariable("diffuse").setValue(new float[] {
 								1,
@@ -261,8 +260,7 @@ public class RenderableMesh implements OpenGLRenderable{
 						}
 					}
 				}catch( ShaderException | IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					ErrorHandler.catchError(e);
 				}
 				
 				/*-----------------------------------------------------------------

@@ -49,31 +49,8 @@ public class WorldFrame extends OpenGLPanel {
 		if( start_time == 0 )
 			start_time = System.currentTimeMillis();
 		
-		long delta_time = System.currentTimeMillis() - start_time;
-		
-		float font_alpha_space_balls = 0;
-		float font_alpha_2 = 0;
-		if( delta_time < 3000 )
-			font_alpha_space_balls = delta_time / 3000.0f;
-		else if( delta_time < 6000 ) {
-			font_alpha_space_balls = 1;
-			font_alpha_2 = (delta_time - 3000.0f) / 3000.0f;
-		}
-		else if( delta_time < 7000 ) {
-			delta_time -= 6000;
-			font_alpha_space_balls = font_alpha_2 = 1.0f - (delta_time / 1000.0f);
-		}
-		
 //		GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 		speed_bar.render(graphics, game_systems.world_engine.basketball_shot_percent, getHeight(), getWidth());
-		
-		OpenGLFont.setFont(graphics, new Font("comic sans", Font.PLAIN, 150));
-		OpenGLFont.setFontColor(1, 1, 1, font_alpha_space_balls);
-		OpenGLFont.drawString2D(graphics, "Spaceballs", (int) ((getWidth()-OpenGLFont.getStringWidth("Spaceballs"))/2 -OpenGLFont.getStringWidth("2")), getHeight()/4);
-		
-		OpenGLFont.setFont(graphics, new Font("comic sans", Font.PLAIN, 150));
-		OpenGLFont.setFontColor(1, 1, 1, font_alpha_2);
-		OpenGLFont.drawString2D(graphics, "2", (int) ((getWidth() - OpenGLFont.getStringWidth("2"))/2 + OpenGLFont.getStringWidth("Spaceballs") / 2), getHeight()/4);
 	
 		String score = String.format("%02d", game_systems.world_engine.times_scored);
 		OpenGLFont.setFont(graphics, new Font("comic sans", Font.PLAIN, 100));

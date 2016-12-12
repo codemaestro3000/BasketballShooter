@@ -24,6 +24,7 @@ import com.viduus.charon.global.output.OutputHandler;
 public class GraphicsEngine {
 
 	public static final int LOADING_SCREEN = 100;
+	public static final int GAME_SCREEN = 101;
 
 	private GLFWErrorCallback errorCallback;
 
@@ -92,9 +93,12 @@ public class GraphicsEngine {
 			frame_focus = frame_id;
 
 			OpenGLPanel new_frame = null;
-			switch( frame_id ){
-			case(LOADING_SCREEN): 
+			switch( frame_id ){ 
+			case(GAME_SCREEN): 
 				new_frame = frame_manager.retrieveInitialGameLoadingFrame( graphics_frame );
+				break;
+			case(LOADING_SCREEN):
+				new_frame = frame_manager.retrieveLoadingFrame( graphics_frame );
 				break;
 			}
 			
