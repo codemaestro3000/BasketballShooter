@@ -87,8 +87,11 @@ public class IntroFrame extends OpenGLPanel {
 			
 		}else if( delta_time < 25500 ){
 			text_pos -= 0.5f;
-			OpenGLFont.setFont(graphics, new Font("comic sans", Font.PLAIN, 20));
+			OpenGLFont.setFont(graphics, new Font("comic sans", Font.PLAIN, 50));
 			OpenGLFont.setFontColor(1, 1, 1, 1);
+			if(text_pos < getHeight() / 5)
+				text_pos = getHeight() / 5;
+			
 			for( int i=0 ; i<lines.length ; i++ ){
 				OpenGLFont.drawString2D(graphics, lines[i], (int) ((getWidth() - OpenGLFont.getStringWidth(lines[i]))/2), (int) (text_pos + i*OpenGLFont.getFontMetrics().line_height));
 			}

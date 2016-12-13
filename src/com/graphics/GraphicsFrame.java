@@ -41,6 +41,8 @@ public class GraphicsFrame extends OpenGLFrame {
         setVisible(true);
         setFPSVisible(true);
         setDefaultCloseOperation( OpenGLFrame.KILL_ON_CLOSE );
+        setBackgroundColor(0.0f, 0.0f, 0.0f);
+        this.setBorder(false);
 	}
 
 	/**
